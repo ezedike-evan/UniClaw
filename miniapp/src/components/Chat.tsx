@@ -110,7 +110,7 @@ export function Chat({ chat }: Props): JSX.Element {
           />
           <IconButton
             type="submit"
-            mode="filled"
+            mode="bezeled"
             size="l"
             disabled={chat.sending || !input.trim()}
             aria-label="Send"
