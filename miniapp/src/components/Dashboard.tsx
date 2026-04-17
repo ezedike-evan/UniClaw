@@ -1,4 +1,3 @@
-import { Cell, List, Section } from "@telegram-apps/telegram-ui";
 import type { TelegramUser } from "../types";
 import { QuickActions, type QuickAction } from "./QuickActions";
 import { Icon } from "./icons";
@@ -39,34 +38,45 @@ export function Dashboard({ user, onAction }: Props): JSX.Element {
         </p>
       </header>
 
-      <List style={{ paddingBottom: 96 }}>
+      <div className="dashboard-body">
         <QuickActions onPick={onAction} />
 
-        <Section header="What's happening">
-          {HIGHLIGHTS.map((h) => (
-            <Cell
-              key={h.title}
-              before={<Icon name="events" />}
-              subtitle={h.when}
-              onClick={() =>
-                onAction({
-                  id: h.tag,
-                  icon: "events",
-                  title: h.title,
-                  subtitle: h.when,
-                  prompt: `Tell me about "${h.title}" at UNILAG.`,
-                })
-              }
-            >
-              {h.title}
-            </Cell>
-          ))}
-        </Section>
+        <section className="uc-section">
+          <h2 className="uc-section-header">What's happening</h2>
+          <div className="uc-card">
+            {HIGHLIGHTS.map((h, i) => (
+              <button
+                key={h.title}
+                type="button"
+                className="uc-cell"
+                data-first={i === 0 ? "true" : undefined}
+                data-last={i === HIGHLIGHTS.length - 1 ? "true" : undefined}
+                onClick={() =>
+                  onAction({
+                    id: h.tag,
+                    icon: "events",
+                    title: h.title,
+                    subtitle: h.when,
+                    prompt: `Tell me about "${h.title}" at UNILAG.`,
+                  })
+                }
+              >
+                <span className="uc-cell-icon">
+                  <Icon name="events" size={22} />
+                </span>
+                <span className="uc-cell-body">
+                  <span className="uc-cell-title">{h.title}</span>
+                  <span className="uc-cell-subtitle">{h.when}</span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </section>
 
         <p className="dashboard-footnote">
           Powered by Claude · Grounded by UNILAG knowledge base
         </p>
-      </List>
+      </div>
     </div>
   );
 }

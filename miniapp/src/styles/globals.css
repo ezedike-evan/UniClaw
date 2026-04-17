@@ -379,3 +379,260 @@ html.dark [class*="tgui-Tabbar__item--selected"] {
 html.dark [class*="tgui-Divider"] {
   background: rgba(255, 255, 255, 0.08) !important;
 }
+
+/* ------------------------- Native cell/section/card (replaces TG UI) ------------------------- */
+
+.dashboard-body {
+  padding: 0 16px 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.uc-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.uc-section-header {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 4px 4px 0;
+  color: var(--tgui--link_color, #3390ec);
+}
+
+.uc-section-footer {
+  font-size: 12px;
+  margin: 6px 4px 0;
+  opacity: 0.6;
+  line-height: 1.4;
+}
+
+.uc-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+html.dark .uc-card {
+  background: #232e3c;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.uc-cell {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.uc-cell[data-first="true"] {
+  border-top: none;
+}
+
+html.dark .uc-cell {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.uc-cell:hover,
+.uc-cell:active {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+html.dark .uc-cell:hover,
+html.dark .uc-cell:active {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.uc-cell-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tgui--link_color, #3390ec);
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.uc-cell-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.uc-cell-title {
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.uc-cell-subtitle {
+  font-size: 13px;
+  opacity: 0.6;
+  line-height: 1.35;
+}
+
+/* ------------------------- Contribute form ------------------------- */
+
+.contribute-form {
+  padding: 16px 16px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.uc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.uc-field:first-child {
+  border-top: none;
+}
+
+html.dark .uc-field {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.uc-field-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+.uc-select,
+.uc-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+  color: inherit;
+  background: #f1f3f5;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  outline: none;
+  box-sizing: border-box;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease;
+}
+
+.uc-textarea {
+  resize: vertical;
+  min-height: 120px;
+  font-family: inherit;
+}
+
+.uc-select:focus,
+.uc-textarea:focus {
+  border-color: var(--tgui--link_color, #3390ec);
+  background: #ffffff;
+}
+
+.uc-textarea::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+html.dark .uc-select,
+html.dark .uc-textarea {
+  background: #17212b;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+html.dark .uc-select:focus,
+html.dark .uc-textarea:focus {
+  background: #1f2a38;
+}
+
+html.dark .uc-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.contribute-submit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.uc-button {
+  width: 100%;
+  height: 48px;
+  padding: 0 20px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--tgui--button_text_color, #ffffff);
+  background: var(--tgui--button_color, #3390ec);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: opacity 120ms ease;
+}
+
+.uc-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.uc-button:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.uc-error {
+  font-size: 13px;
+  margin: 0;
+  color: #e53935;
+}
+
+html.dark .uc-error {
+  color: #ff6b6b;
+}
+
+.contribute-thankyou {
+  padding: 48px 24px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.contribute-thankyou .uc-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 8px 0 0;
+}
+
+.contribute-thankyou .uc-body {
+  font-size: 14px;
+  opacity: 0.7;
+  line-height: 1.5;
+  margin: 0 0 12px;
+  max-width: 320px;
+}
+
+.contribute-thankyou .uc-button {
+  max-width: 240px;
+}

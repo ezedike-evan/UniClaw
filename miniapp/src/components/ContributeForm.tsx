@@ -1,13 +1,4 @@
 import { useState, type FormEvent } from "react";
-import {
-  Button,
-  Caption,
-  List,
-  Placeholder,
-  Section,
-  Select,
-  Textarea,
-} from "@telegram-apps/telegram-ui";
 import type { TelegramUser } from "../types";
 import { Icon } from "./icons";
 
@@ -71,71 +62,69 @@ export function ContributeForm({ user }: Props): JSX.Element {
 
   if (done) {
     return (
-      <div style={{ paddingTop: 40, paddingBottom: 96 }}>
-        <Placeholder
-          header="Thank you"
-          description="An admin will review your submission. UniClaw gets smarter thanks to students like you."
-          action={
-            <Button size="m" onClick={reset}>
-              Submit another
-            </Button>
-          }
-        >
-          <div className="thank-icon">
-            <Icon name="sparkles" size={56} />
-          </div>
-        </Placeholder>
+      <div className="contribute-thankyou">
+        <div className="thank-icon">
+          <Icon name="sparkles" size={56} />
+        </div>
+        <h2 className="uc-title">Thank you</h2>
+        <p className="uc-body">
+          An admin will review your submission. UniClaw gets smarter thanks to
+          students like you.
+        </p>
+        <button type="button" className="uc-button" onClick={reset}>
+          Submit another
+        </button>
       </div>
     );
   }
 
   return (
-    <form onSubmit={submit}>
-      <List style={{ paddingBottom: 96 }}>
-        <Section
-          header="Contribute"
-          footer="Help UniClaw stay accurate. Submissions are reviewed before they go live."
-        >
-          <Select
-            header="Category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            {CATEGORIES.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </Select>
-
-          <Textarea
-            header="What do you want to contribute?"
-            placeholder="Be specific — names, times, fees, URLs…"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            rows={6}
-          />
-        </Section>
-
-        <Section>
-          <div style={{ padding: "12px 16px" }}>
-            {error && (
-              <Caption level="1" style={{ color: "var(--tgui--destructive_text_color)" }}>
-                {error}
-              </Caption>
-            )}
-            <Button
-              type="submit"
-              size="l"
-              stretched
-              disabled={submitting || !content.trim()}
-              loading={submitting}
+    <form onSubmit={submit} className="contribute-form">
+      <section className="uc-section">
+        <h2 className="uc-section-header">Contribute</h2>
+        <div className="uc-card">
+          <label className="uc-field">
+            <span className="uc-field-label">Category</span>
+            <select
+              className="uc-select"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
             >
-              Submit contribution
-            </Button>
-          </div>
-        </Section>
-      </List>
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="uc-field">
+            <span className="uc-field-label">What do you want to contribute?</span>
+            <textarea
+              className="uc-textarea"
+              placeholder="Be specific — names, times, fees, URLs…"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              rows={6}
+            />
+          </label>
+        </div>
+        <p className="uc-section-footer">
+          Help UniClaw stay accurate. Submissions are reviewed before they go
+          live.
+        </p>
+      </section>
+
+      <div className="contribute-submit">
+        {error && <p className="uc-error">{error}</p>}
+        <button
+          type="submit"
+          className="uc-button"
+          disabled={submitting || !content.trim()}
+        >
+          {submitting ? "Submitting…" : "Submit contribution"}
+        </button>
+      </div>
     </form>
   );
 }

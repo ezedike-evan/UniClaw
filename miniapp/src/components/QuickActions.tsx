@@ -1,4 +1,3 @@
-import { Cell, Section } from "@telegram-apps/telegram-ui";
 import { Icon, type IconKey } from "./icons";
 
 export interface QuickAction {
@@ -60,17 +59,28 @@ interface Props {
 
 export function QuickActions({ onPick }: Props): JSX.Element {
   return (
-    <Section header="Quick actions">
-      {QUICK_ACTIONS.map((a) => (
-        <Cell
-          key={a.id}
-          before={<Icon name={a.icon} />}
-          subtitle={a.subtitle}
-          onClick={() => onPick(a)}
-        >
-          {a.title}
-        </Cell>
-      ))}
-    </Section>
+    <section className="uc-section">
+      <h2 className="uc-section-header">Quick actions</h2>
+      <div className="uc-card">
+        {QUICK_ACTIONS.map((a, i) => (
+          <button
+            key={a.id}
+            type="button"
+            className="uc-cell"
+            onClick={() => onPick(a)}
+            data-first={i === 0 ? "true" : undefined}
+            data-last={i === QUICK_ACTIONS.length - 1 ? "true" : undefined}
+          >
+            <span className="uc-cell-icon">
+              <Icon name={a.icon} size={22} />
+            </span>
+            <span className="uc-cell-body">
+              <span className="uc-cell-title">{a.title}</span>
+              <span className="uc-cell-subtitle">{a.subtitle}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+    </section>
   );
 }
