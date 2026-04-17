@@ -1,11 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  Caption,
-  Chip,
-  IconButton,
-  Input,
-  Placeholder,
-} from "@telegram-apps/telegram-ui";
+import { Chip, IconButton, Placeholder } from "@telegram-apps/telegram-ui";
 import type { UseChat } from "../hooks/useChat";
 import type { ChatMessage } from "../types";
 import { Icon } from "./icons";
@@ -102,11 +96,14 @@ export function Chat({ chat }: Props): JSX.Element {
           }}
           className="chat-input-row"
         >
-          <Input
+          <input
+            className="chat-input"
+            type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask UniClaw anything…"
             disabled={chat.sending}
+            autoComplete="off"
           />
           <IconButton
             type="submit"
@@ -119,11 +116,9 @@ export function Chat({ chat }: Props): JSX.Element {
           </IconButton>
         </form>
 
-        <div style={{ textAlign: "center", paddingTop: 4 }}>
-          <Caption level="1" style={{ opacity: 0.5 }}>
-            Powered by Claude · Grounded by UNILAG knowledge base
-          </Caption>
-        </div>
+        <p className="chat-footnote">
+          Powered by Claude · Grounded by UNILAG knowledge base
+        </p>
       </div>
     </div>
   );
