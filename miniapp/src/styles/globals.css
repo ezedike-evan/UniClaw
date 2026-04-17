@@ -320,3 +320,62 @@ html.dark .bubble-bot {
     transform: scale(1.02);
   }
 }
+
+/* ------------------------- Dark mode overrides for Telegram UI ------------------------- */
+
+html.dark [class*="tgui-AppRoot"],
+html.dark [class*="tgui-List"],
+html.dark [class*="tgui-Section"],
+html.dark [class*="tgui-Cell"],
+html.dark [class*="tgui-Placeholder"],
+html.dark [class*="tgui-Tabbar"] {
+  background: #17212b !important;
+  color: #ffffff !important;
+}
+
+html.dark [class*="tgui-Section__header"],
+html.dark [class*="tgui-Section__footer"],
+html.dark [class*="tgui-Cell__subtitle"],
+html.dark [class*="tgui-Subheadline"],
+html.dark [class*="tgui-Caption"] {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+html.dark [class*="tgui-Cell"]:hover,
+html.dark [class*="tgui-Cell"]:active {
+  background: #1f2a38 !important;
+}
+
+html.dark [class*="tgui-Select__select"],
+html.dark [class*="tgui-Textarea__textarea"],
+html.dark [class*="tgui-Input__input"],
+html.dark [class*="tgui-FormInput"] select,
+html.dark [class*="tgui-FormInput"] textarea,
+html.dark [class*="tgui-FormInput"] input {
+  background: #232e3c !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark [class*="tgui-Select"],
+html.dark [class*="tgui-Textarea"],
+html.dark [class*="tgui-FormInput"] {
+  background: #17212b !important;
+}
+
+html.dark [class*="tgui-Chip"] {
+  background: #232e3c !important;
+  color: #ffffff !important;
+}
+
+html.dark [class*="tgui-Tabbar__item"] {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+html.dark [class*="tgui-Tabbar__item--selected"] {
+  color: var(--tgui--link_color, #3390ec) !important;
+}
+
+html.dark [class*="tgui-Divider"] {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
