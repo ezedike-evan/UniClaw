@@ -1,5 +1,15 @@
 import { useState, type FormEvent } from "react";
+import {
+  Button,
+  Caption,
+  List,
+  Placeholder,
+  Section,
+  Select,
+  Textarea,
+} from "@telegram-apps/telegram-ui";
 import type { TelegramUser } from "../types";
+import { Icon } from "./icons";
 
 const CATEGORIES = [
   "registration",
@@ -13,7 +23,8 @@ const CATEGORIES = [
 ];
 
 const API_BASE =
-  (import.meta.env.VITE_API_BASE as string | undefined) ?? "http://localhost:3000";
+  (import.meta.env.VITE_API_BASE as string | undefined) ??
+  "http://localhost:3000";
 
 interface Props {
   user: TelegramUser | null;
@@ -60,78 +71,71 @@ export function ContributeForm({ user }: Props): JSX.Element {
 
   if (done) {
     return (
-      <div className="p-4 pb-28 flex flex-col items-center text-center gap-4 pt-10">
-        <div className="text-6xl animate-fade-in-up">🙌</div>
-        <h2 className="text-xl font-bold">Thank you!</h2>
-        <p className="muted max-w-xs text-sm">
-          An admin will review your submission. UniClaw gets smarter thanks to
-          students like you.
-        </p>
-        <button
-          type="button"
-          onClick={reset}
-          className="glass-card px-4 py-2 text-sm font-medium"
+      <div style={{ paddingTop: 40, paddingBottom: 96 }}>
+        <Placeholder
+          header="Thank you"
+          description="An admin will review your submission. UniClaw gets smarter thanks to students like you."
+          action={
+            <Button size="m" onClick={reset}>
+              Submit another
+            </Button>
+          }
         >
-          Submit another
-        </button>
+          <div className="thank-icon">
+            <Icon name="sparkles" size={56} />
+          </div>
+        </Placeholder>
       </div>
     );
   }
 
   return (
-    <div className="p-4 pb-28 space-y-4">
-      <header className="pt-2">
-        <h1 className="text-2xl font-bold">Contribute</h1>
-        <p className="text-sm muted mt-1">
-          Help UniClaw stay accurate. Submissions are reviewed before they go
-          live.
-        </p>
-      </header>
-
-      <form onSubmit={submit} className="space-y-3">
-        <div className="glass-card p-3 space-y-1">
-          <label className="text-xs font-medium muted" htmlFor="category">
-            Category
-          </label>
-          <select
-            id="category"
+    <form onSubmit={submit}>
+      <List style={{ paddingBottom: 96 }}>
+        <Section
+          header="Contribute"
+          footer="Help UniClaw stay accurate. Submissions are reviewed before they go live."
+        >
+          <Select
+            header="Category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full bg-transparent outline-none text-sm py-1"
           >
             {CATEGORIES.map((c) => (
-              <option key={c} value={c} className="text-black">
+              <option key={c} value={c}>
                 {c}
               </option>
             ))}
-          </select>
-        </div>
+          </Select>
 
-        <div className="glass-card p-3 space-y-1">
-          <label className="text-xs font-medium muted" htmlFor="content">
-            What do you want to contribute?
-          </label>
-          <textarea
-            id="content"
+          <Textarea
+            header="What do you want to contribute?"
+            placeholder="Be specific — names, times, fees, URLs…"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={6}
-            placeholder="Be specific — names, times, fees, URLs…"
-            className="w-full bg-transparent outline-none text-sm resize-none"
           />
-        </div>
+        </Section>
 
-        {error && <p className="text-xs text-red-500">{error}</p>}
-
-        <button
-          type="submit"
-          disabled={submitting || !content.trim()}
-          className="w-full h-11 rounded-2xl font-semibold text-white disabled:opacity-50 transition"
-          style={{ background: "linear-gradient(135deg,#003b8e,#1d4ed8)" }}
-        >
-          {submitting ? "Submitting…" : "Submit contribution"}
-        </button>
-      </form>
-    </div>
+        <Section>
+          <div style={{ padding: "12px 16px" }}>
+            {error && (
+              <Caption level="1" style={{ color: "var(--tgui--destructive_text_color)" }}>
+                {error}
+              </Caption>
+            )}
+            <Button
+              type="submit"
+              size="l"
+              stretched
+              disabled={submitting || !content.trim()}
+              loading={submitting}
+            >
+              Submit contribution
+            </Button>
+          </div>
+        </Section>
+      </List>
+    </form>
   );
 }

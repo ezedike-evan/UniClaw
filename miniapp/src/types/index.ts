@@ -27,6 +27,8 @@ export interface TelegramWebApp {
   };
   colorScheme: "light" | "dark";
   themeParams: Record<string, string>;
+  platform: string;
+  version: string;
   ready(): void;
   expand(): void;
   close(): void;

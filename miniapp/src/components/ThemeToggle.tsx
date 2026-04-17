@@ -1,4 +1,6 @@
+import { IconButton } from "@telegram-apps/telegram-ui";
 import type { Theme } from "../types";
+import { Icon } from "./icons";
 
 interface Props {
   theme: Theme;
@@ -7,13 +9,13 @@ interface Props {
 
 export function ThemeToggle({ theme, onToggle }: Props): JSX.Element {
   return (
-    <button
-      type="button"
-      aria-label="Toggle theme"
+    <IconButton
+      mode="bezeled"
+      size="s"
       onClick={onToggle}
-      className="glass-card h-10 w-10 flex items-center justify-center text-lg transition hover:scale-105"
+      aria-label="Toggle theme"
     >
-      {theme === "dark" ? "☀️" : "🌙"}
-    </button>
+      <Icon name={theme === "dark" ? "sun" : "moon"} size={16} />
+    </IconButton>
   );
 }

@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from "react";
+import {
+  Caption,
+  Chip,
+  IconButton,
+  Input,
+  Placeholder,
+} from "@telegram-apps/telegram-ui";
 import type { UseChat } from "../hooks/useChat";
 import type { ChatMessage } from "../types";
+import { Icon } from "./icons";
 
 interface Props {
   chat: UseChat;
@@ -10,12 +18,12 @@ const QUICK_REPLIES = [
   "How do I apply for a hostel?",
   "What's on the exam timetable?",
   "Where can I eat on campus?",
-  "Who do I talk to about course registration?",
+  "Who handles course registration?",
 ];
 
 function TypingIndicator(): JSX.Element {
   return (
-    <div className="flex gap-1 items-center py-1">
+    <div className="typing-row" aria-label="UniClaw is typing">
       <span className="typing-dot" />
       <span className="typing-dot" />
       <span className="typing-dot" />
@@ -26,15 +34,13 @@ function TypingIndicator(): JSX.Element {
 function Bubble({ msg }: { msg: ChatMessage }): JSX.Element {
   const isUser = msg.role === "user";
   return (
-    <div
-      className={`flex ${isUser ? "justify-end" : "justify-start"} animate-fade-in-up`}
-    >
-      <div
-        className={`max-w-[85%] px-4 py-2.5 text-sm whitespace-pre-wrap leading-relaxed ${
-          isUser ? "bubble-user" : "bubble-bot"
-        }`}
-      >
-        {msg.content || (msg.pending ? <TypingIndicator /> : "")}
+    <div className={`bubble-row ${isUser ? "user" : "bot"}`}>
+      <div className={`bubble ${isUser ? "bubble-user" : "bubble-bot"}`}>
+        {msg.content ? (
+          <span>{msg.content}</span>
+        ) : msg.pending ? (
+          <TypingIndicator />
+        ) : null}
       </div>
     </div>
   );
@@ -59,41 +65,33 @@ export function Chat({ chat }: Props): JSX.Element {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div
-        ref={scrollRef}
-        className="flex-1 overflow-y-auto px-4 py-4 space-y-3"
-      >
+    <div className="chat-screen">
+      <div ref={scrollRef} className="chat-scroll">
         {chat.messages.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center text-center gap-4 muted">
-            <div className="text-5xl animate-logo-pulse">🦅</div>
-            <div>
-              <div className="font-semibold text-base text-[color:var(--uc-text)]">
-                UniClaw is listening
-              </div>
-              <div className="text-sm mt-1 max-w-xs">
-                Ask about hostels, courses, events, food, contacts — anything
-                UNILAG.
-              </div>
+          <Placeholder
+            header="UniClaw is listening"
+            description="Ask about hostels, courses, events, food, contacts — anything UNILAG."
+          >
+            <div className="chat-empty-icon">
+              <Icon name="sparkles" size={48} />
             </div>
-          </div>
+          </Placeholder>
         ) : (
           chat.messages.map((m) => <Bubble key={m.id} msg={m} />)
         )}
       </div>
 
-      <div className="px-4 pb-3">
-        <div className="flex gap-2 flex-wrap mb-2">
+      <div className="chat-footer">
+        <div className="chip-row">
           {QUICK_REPLIES.map((q) => (
-            <button
+            <Chip
               key={q}
-              type="button"
+              mode="elevated"
               onClick={() => submit(q)}
-              className="chip"
               disabled={chat.sending}
             >
               {q}
-            </button>
+            </Chip>
           ))}
         </div>
 
@@ -102,28 +100,30 @@ export function Chat({ chat }: Props): JSX.Element {
             e.preventDefault();
             void submit(input);
           }}
-          className="glass-card flex items-center gap-2 px-3 py-2"
+          className="chat-input-row"
         >
-          <input
-            type="text"
+          <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask UniClaw anything…"
-            className="flex-1 bg-transparent outline-none text-sm py-1 placeholder:text-[color:var(--uc-muted)]"
             disabled={chat.sending}
           />
-          <button
+          <IconButton
             type="submit"
+            mode="filled"
+            size="l"
             disabled={chat.sending || !input.trim()}
-            className="h-9 px-4 rounded-full font-semibold text-sm text-white disabled:opacity-50 transition"
-            style={{ background: "linear-gradient(135deg,#d97706,#f97316)" }}
+            aria-label="Send"
           >
-            Send
-          </button>
+            <Icon name="send" size={18} />
+          </IconButton>
         </form>
-        <p className="text-[10px] text-center muted mt-1.5">
-          Powered by Claude · Grounded by UNILAG knowledge base
-        </p>
+
+        <div style={{ textAlign: "center", paddingTop: 4 }}>
+          <Caption level="1" style={{ opacity: 0.5 }}>
+            Powered by Claude · Grounded by UNILAG knowledge base
+          </Caption>
+        </div>
       </div>
     </div>
   );

@@ -1,31 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
-  --tg-bg: var(--tg-theme-bg-color, #fafaf9);
-  --tg-text: var(--tg-theme-text-color, #0f0f0f);
-  --tg-hint: var(--tg-theme-hint-color, #707579);
-  --tg-link: var(--tg-theme-link-color, #003b8e);
-  --tg-button: var(--tg-theme-button-color, #d97706);
-  --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
-  --tg-secondary-bg: var(--tg-theme-secondary-bg-color, #f0efed);
-
-  --uc-surface: #fafaf9;
-  --uc-card: rgba(255, 255, 255, 0.72);
-  --uc-border: rgba(15, 15, 15, 0.08);
-  --uc-text: #0f0f0f;
-  --uc-muted: #6b7280;
   --uc-claude: #d97706;
+  --uc-claude-2: #f97316;
   --uc-unilag: #003b8e;
-}
-
-.dark {
-  --uc-surface: #0f0f0f;
-  --uc-card: rgba(30, 30, 30, 0.6);
-  --uc-border: rgba(255, 255, 255, 0.08);
-  --uc-text: #fafaf9;
-  --uc-muted: #9ca3af;
 }
 
 html,
@@ -37,75 +13,205 @@ body,
 }
 
 body {
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background: var(--uc-surface);
-  color: var(--uc-text);
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  background: var(--tgui--bg_color, #ffffff);
+  color: var(--tgui--text_color, #000000);
   -webkit-font-smoothing: antialiased;
   overscroll-behavior-y: none;
 }
 
-@layer components {
-  .glass-card {
-    background: var(--uc-card);
-    border: 1px solid var(--uc-border);
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
-    border-radius: 20px;
-  }
+/* ------------------------- Layout shell ------------------------- */
 
-  .bubble-user {
-    background: linear-gradient(135deg, #d97706, #f97316);
-    color: #fff;
-    border-radius: 18px 18px 4px 18px;
-  }
-
-  .bubble-bot {
-    background: var(--uc-card);
-    color: var(--uc-text);
-    border: 1px solid var(--uc-border);
-    border-radius: 18px 18px 18px 4px;
-    backdrop-filter: blur(12px);
-  }
-
-  .chip {
-    @apply inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium transition;
-    background: var(--uc-card);
-    border: 1px solid var(--uc-border);
-    color: var(--uc-text);
-  }
-
-  .chip:hover {
-    transform: translateY(-1px);
-  }
-
-  .nav-btn {
-    @apply flex-1 flex flex-col items-center justify-center gap-0.5 py-2 text-xs font-medium transition;
-    color: var(--uc-muted);
-  }
-
-  .nav-btn.active {
-    color: var(--uc-claude);
-  }
-
-  .muted {
-    color: var(--uc-muted);
-  }
+.app-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  min-height: 100vh;
 }
 
-/* typing dots */
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.app-theme-toggle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 20;
+}
+
+.app-tabbar {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.center-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+}
+
+/* ------------------------- Chat screen ------------------------- */
+
+.chat-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chat-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-empty-icon {
+  display: flex;
+  justify-content: center;
+  color: var(--uc-claude);
+  animation: uc-pulse 1.6s ease-in-out infinite;
+}
+
+.chat-footer {
+  padding: 8px 12px 12px;
+  border-top: 1px solid var(--tgui--divider, rgba(0, 0, 0, 0.1));
+  background: var(--tgui--bg_color, #ffffff);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.chip-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.chat-input-row > :first-child {
+  flex: 1;
+}
+
+/* ------------------------- Chat bubbles ------------------------- */
+
+.bubble-row {
+  display: flex;
+  animation: uc-fade-up 200ms ease-out;
+}
+.bubble-row.user {
+  justify-content: flex-end;
+}
+.bubble-row.bot {
+  justify-content: flex-start;
+}
+
+.bubble {
+  max-width: 85%;
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.bubble-user {
+  background: linear-gradient(135deg, var(--uc-claude), var(--uc-claude-2));
+  color: #ffffff;
+  border-radius: 18px 18px 4px 18px;
+}
+
+.bubble-bot {
+  background: var(--tgui--secondary_bg_color, #f1f1f1);
+  color: var(--tgui--text_color, #000);
+  border-radius: 18px 18px 18px 4px;
+}
+
+/* ------------------------- Typing indicator ------------------------- */
+
+.typing-row {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  padding: 2px 0;
+}
+
 .typing-dot {
   width: 6px;
   height: 6px;
   border-radius: 9999px;
-  background: var(--uc-muted);
+  background: currentColor;
+  opacity: 0.5;
   display: inline-block;
-}
-.typing-dot:nth-child(1) {
-  animation: dot-pulse 1.4s ease-in-out infinite both;
+  animation: uc-dot 1.4s ease-in-out infinite both;
 }
 .typing-dot:nth-child(2) {
-  animation: dot-pulse 1.4s ease-in-out 0.2s infinite both;
+  animation-delay: 0.2s;
 }
 .typing-dot:nth-child(3) {
-  animation: dot-pulse 1.4s ease-in-out 0.4s infinite both;
+  animation-delay: 0.4s;
+}
+
+/* ------------------------- Thank-you placeholder ------------------------- */
+
+.thank-icon {
+  color: var(--uc-claude);
+  display: flex;
+  justify-content: center;
+  animation: uc-fade-up 300ms ease-out;
+}
+
+/* ------------------------- Animations ------------------------- */
+
+@keyframes uc-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes uc-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.3;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+
+@keyframes uc-pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
 }

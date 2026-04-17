@@ -1,45 +1,55 @@
+import { Cell, Section } from "@telegram-apps/telegram-ui";
+import { Icon, type IconKey } from "./icons";
+
 export interface QuickAction {
   id: string;
-  icon: string;
+  icon: IconKey;
   title: string;
+  subtitle: string;
   prompt: string;
 }
 
 export const QUICK_ACTIONS: QuickAction[] = [
   {
     id: "hostel",
-    icon: "🏠",
+    icon: "hostel",
     title: "Hostels",
+    subtitle: "Options, fees, how to apply",
     prompt: "Tell me about UNILAG hostels — options, fees, how to apply.",
   },
   {
     id: "timetable",
-    icon: "📅",
+    icon: "timetable",
     title: "Timetable",
+    subtitle: "Class schedules & where to find yours",
     prompt: "How does the UNILAG timetable work and where do I find mine?",
   },
   {
     id: "events",
-    icon: "🎉",
+    icon: "events",
     title: "Events",
+    subtitle: "What's happening on campus",
     prompt: "What's happening on UNILAG campus right now?",
   },
   {
     id: "exams",
-    icon: "📝",
+    icon: "exams",
     title: "Exams",
+    subtitle: "Timetable & results portal",
     prompt: "Tell me about exam schedules and the results portal.",
   },
   {
     id: "food",
-    icon: "🍱",
+    icon: "food",
     title: "Food",
+    subtitle: "Spots around campus",
     prompt: "Where are the best food spots around UNILAG?",
   },
   {
     id: "contacts",
-    icon: "📞",
+    icon: "contacts",
     title: "Contacts",
+    subtitle: "Offices, faculty, emergencies",
     prompt: "Give me the key UNILAG offices and contacts a student needs.",
   },
 ];
@@ -50,20 +60,17 @@ interface Props {
 
 export function QuickActions({ onPick }: Props): JSX.Element {
   return (
-    <div className="grid grid-cols-2 gap-3">
-      {QUICK_ACTIONS.map((a, i) => (
-        <button
+    <Section header="Quick actions">
+      {QUICK_ACTIONS.map((a) => (
+        <Cell
           key={a.id}
-          type="button"
+          before={<Icon name={a.icon} />}
+          subtitle={a.subtitle}
           onClick={() => onPick(a)}
-          className="glass-card p-4 text-left transition hover:-translate-y-0.5 hover:shadow-lg active:scale-[0.98] animate-fade-in-up"
-          style={{ animationDelay: `${i * 40}ms` }}
         >
-          <div className="text-2xl mb-2">{a.icon}</div>
-          <div className="font-semibold">{a.title}</div>
-          <div className="text-xs muted mt-0.5 line-clamp-2">{a.prompt}</div>
-        </button>
+          {a.title}
+        </Cell>
       ))}
-    </div>
+    </Section>
   );
 }
