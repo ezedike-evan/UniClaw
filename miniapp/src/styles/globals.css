@@ -28,9 +28,49 @@ body {
   overscroll-behavior-y: none;
 }
 
-html.dark body {
+html.dark body,
+html.dark #root,
+html.dark [class*="tgui-AppRoot"] {
   background: #17212b;
   color: #ffffff;
+}
+
+html.dark .app-shell,
+html.dark .app-main,
+html.dark .dashboard,
+html.dark .dashboard-header,
+html.dark .dashboard-body,
+html.dark .chat-screen,
+html.dark .chat-scroll,
+html.dark .contribute-form,
+html.dark .contribute-thankyou,
+html.dark .uc-card,
+html.dark .uc-cell,
+html.dark .uc-cell-title,
+html.dark .uc-cell-subtitle,
+html.dark .uc-field,
+html.dark .uc-field-label,
+html.dark .dashboard-title,
+html.dark .dashboard-subtitle,
+html.dark .dashboard-eyebrow,
+html.dark .uc-section-header,
+html.dark .uc-section-footer,
+html.dark .dashboard-footnote,
+html.dark .chat-footnote,
+html.dark .uc-title,
+html.dark .uc-body {
+  color: #ffffff;
+}
+
+html.dark .uc-cell-subtitle,
+html.dark .dashboard-subtitle,
+html.dark .dashboard-eyebrow,
+html.dark .dashboard-footnote,
+html.dark .chat-footnote,
+html.dark .uc-section-footer,
+html.dark .uc-field-label,
+html.dark .uc-body {
+  color: rgba(255, 255, 255, 0.65);
 }
 
 /* ------------------------- Layout shell ------------------------- */
