@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  bot:
+    build: ./bot
+    container_name: uniclaw-bot
+    restart: unless-stopped
+    env_file:
+      - ./bot/.env
+    volumes:
+      - ./knowledge:/app/knowledge:ro
+      - ./bot/contributions.log.json:/app/contributions.log.json
+    ports:
+      - "3000:3000"
+
+  miniapp:
+    build: ./miniapp
+    container_name: uniclaw-miniapp
+    restart: unless-stopped
+    ports:
+      - "5173:80"

@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --tg-bg: var(--tg-theme-bg-color, #fafaf9);
+  --tg-text: var(--tg-theme-text-color, #0f0f0f);
+  --tg-hint: var(--tg-theme-hint-color, #707579);
+  --tg-link: var(--tg-theme-link-color, #003b8e);
+  --tg-button: var(--tg-theme-button-color, #d97706);
+  --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
+  --tg-secondary-bg: var(--tg-theme-secondary-bg-color, #f0efed);
+
+  --uc-surface: #fafaf9;
+  --uc-card: rgba(255, 255, 255, 0.72);
+  --uc-border: rgba(15, 15, 15, 0.08);
+  --uc-text: #0f0f0f;
+  --uc-muted: #6b7280;
+  --uc-claude: #d97706;
+  --uc-unilag: #003b8e;
+}
+
+.dark {
+  --uc-surface: #0f0f0f;
+  --uc-card: rgba(30, 30, 30, 0.6);
+  --uc-border: rgba(255, 255, 255, 0.08);
+  --uc-text: #fafaf9;
+  --uc-muted: #9ca3af;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--uc-surface);
+  color: var(--uc-text);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+@layer components {
+  .glass-card {
+    background: var(--uc-card);
+    border: 1px solid var(--uc-border);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border-radius: 20px;
+  }
+
+  .bubble-user {
+    background: linear-gradient(135deg, #d97706, #f97316);
+    color: #fff;
+    border-radius: 18px 18px 4px 18px;
+  }
+
+  .bubble-bot {
+    background: var(--uc-card);
+    color: var(--uc-text);
+    border: 1px solid var(--uc-border);
+    border-radius: 18px 18px 18px 4px;
+    backdrop-filter: blur(12px);
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-medium transition;
+    background: var(--uc-card);
+    border: 1px solid var(--uc-border);
+    color: var(--uc-text);
+  }
+
+  .chip:hover {
+    transform: translateY(-1px);
+  }
+
+  .nav-btn {
+    @apply flex-1 flex flex-col items-center justify-center gap-0.5 py-2 text-xs font-medium transition;
+    color: var(--uc-muted);
+  }
+
+  .nav-btn.active {
+    color: var(--uc-claude);
+  }
+
+  .muted {
+    color: var(--uc-muted);
+  }
+}
+
+/* typing dots */
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--uc-muted);
+  display: inline-block;
+}
+.typing-dot:nth-child(1) {
+  animation: dot-pulse 1.4s ease-in-out infinite both;
+}
+.typing-dot:nth-child(2) {
+  animation: dot-pulse 1.4s ease-in-out 0.2s infinite both;
+}
+.typing-dot:nth-child(3) {
+  animation: dot-pulse 1.4s ease-in-out 0.4s infinite both;
+}
