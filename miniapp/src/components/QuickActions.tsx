@@ -6,36 +6,45 @@ export interface QuickAction {
   title: string;
   subtitle: string;
   prompt: string;
+  freeform?: boolean;
 }
 
-export const QUICK_ACTIONS: QuickAction[] = [
+interface QuickActionConfig extends QuickAction {
+  chipClass: string;
+}
+
+export const QUICK_ACTIONS: QuickActionConfig[] = [
   {
     id: "hostel",
     icon: "hostel",
     title: "Hostels",
-    subtitle: "Options, fees, how to apply",
+    subtitle: "Options, fees, apply",
     prompt: "Tell me about UNILAG hostels — options, fees, how to apply.",
+    chipClass: "qa-icon-chip--hostel",
   },
   {
     id: "timetable",
     icon: "timetable",
     title: "Timetable",
-    subtitle: "Class schedules & where to find yours",
+    subtitle: "Schedules & where to find yours",
     prompt: "How does the UNILAG timetable work and where do I find mine?",
+    chipClass: "qa-icon-chip--timetable",
   },
   {
     id: "events",
     icon: "events",
     title: "Events",
-    subtitle: "What's happening on campus",
+    subtitle: "What's on campus",
     prompt: "What's happening on UNILAG campus right now?",
+    chipClass: "qa-icon-chip--events",
   },
   {
     id: "exams",
     icon: "exams",
     title: "Exams",
-    subtitle: "Timetable & results portal",
+    subtitle: "Timetable & results",
     prompt: "Tell me about exam schedules and the results portal.",
+    chipClass: "qa-icon-chip--exams",
   },
   {
     id: "food",
@@ -43,13 +52,15 @@ export const QUICK_ACTIONS: QuickAction[] = [
     title: "Food",
     subtitle: "Spots around campus",
     prompt: "Where are the best food spots around UNILAG?",
+    chipClass: "qa-icon-chip--food",
   },
   {
     id: "contacts",
     icon: "contacts",
     title: "Contacts",
-    subtitle: "Offices, faculty, emergencies",
+    subtitle: "Offices & emergencies",
     prompt: "Give me the key UNILAG offices and contacts a student needs.",
+    chipClass: "qa-icon-chip--contacts",
   },
 ];
 
@@ -61,23 +72,20 @@ export function QuickActions({ onPick }: Props): JSX.Element {
   return (
     <section className="uc-section">
       <h2 className="uc-section-header">Quick actions</h2>
-      <div className="uc-card">
-        {QUICK_ACTIONS.map((a, i) => (
+      <div className="qa-grid">
+        {QUICK_ACTIONS.map((a) => (
           <button
             key={a.id}
             type="button"
-            className="uc-cell"
+            className="qa-card"
             onClick={() => onPick(a)}
-            data-first={i === 0 ? "true" : undefined}
-            data-last={i === QUICK_ACTIONS.length - 1 ? "true" : undefined}
+            aria-label={a.title}
           >
-            <span className="uc-cell-icon">
-              <Icon name={a.icon} size={22} />
+            <span className={`qa-icon-chip ${a.chipClass}`}>
+              <Icon name={a.icon} size={24} />
             </span>
-            <span className="uc-cell-body">
-              <span className="uc-cell-title">{a.title}</span>
-              <span className="uc-cell-subtitle">{a.subtitle}</span>
-            </span>
+            <span className="qa-label">{a.title}</span>
+            <span className="qa-sublabel">{a.subtitle}</span>
           </button>
         ))}
       </div>

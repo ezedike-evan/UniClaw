@@ -5,6 +5,7 @@ export interface ChatMessage {
   role: Role;
   content: string;
   pending?: boolean;
+  timestamp?: number;
 }
 
 export type Screen = "home" | "chat" | "contribute";
