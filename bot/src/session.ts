@@ -6,6 +6,7 @@ export interface ChatMessage {
 export interface Session {
   chatId: number;
   firstName: string;
+  faculty?: string;
   history: ChatMessage[];
   lastActive: Date;
   messageCount: number;
@@ -49,6 +50,11 @@ export class SessionManager {
       s.history = s.history.slice(-HISTORY_LIMIT);
     }
     s.lastActive = new Date();
+  }
+
+  setFaculty(chatId: number, faculty: string): void {
+    const s = this.sessions.get(chatId);
+    if (s) s.faculty = faculty;
   }
 
   clear(chatId: number): void {

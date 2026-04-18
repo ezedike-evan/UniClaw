@@ -27,6 +27,7 @@ export async function helpCommand(ctx: Context): Promise<void> {
       "*UniClaw commands*",
       "",
       "/ask [question] — ask me anything",
+      "/news [faculty] — latest UNILAG news, optionally filtered by faculty",
       "/timetable — course timetable info",
       "/hostel — hostel availability & fees",
       "/events — campus events",

@@ -22,6 +22,7 @@ import {
   maybeHandleContribution,
   acceptHttpContribution,
 } from "./commands/contribute.js";
+import { newsCommand } from "./commands/news.js";
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 if (!BOT_TOKEN) {
@@ -50,6 +51,7 @@ async function main(): Promise<void> {
   bot.command("food", foodCommand);
   bot.command("contacts", contactsCommand);
   bot.command("contribute", contributeCommand);
+  bot.command("news", newsCommand);
 
   bot.callbackQuery(/^contribute:/, handleContributeCallback);
 
