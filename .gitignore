@@ -9,3 +9,4 @@ build/
 .idea/
 coverage/
 contributions.log.json
+*.tsbuildinfo

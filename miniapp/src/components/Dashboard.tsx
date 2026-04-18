@@ -9,6 +9,9 @@ interface Props {
   onAction: (action: QuickAction) => void;
 }
 
+/* Matches the 8 markdown files in /knowledge — update if domains are added/removed */
+const KNOWLEDGE_DOMAIN_COUNT = 8;
+
 const HIGHLIGHTS: Array<{ title: string; when: string; tag: string }> = [
   {
     title: "Matriculation Ceremony",
@@ -88,12 +91,12 @@ export function Dashboard({ user, faculty, streak, onAction }: Props): JSX.Eleme
 
         <div className="stat-bar">
           <div className="stat-item">
-            <span className="stat-value">1,200+</span>
-            <span className="stat-label">Questions</span>
+            <span className="stat-value">{KNOWLEDGE_DOMAIN_COUNT}</span>
+            <span className="stat-label">Topics</span>
           </div>
           <div className="stat-item">
-            <span className="stat-value">8</span>
-            <span className="stat-label">Topics</span>
+            <span className="stat-value">Free</span>
+            <span className="stat-label">Always</span>
           </div>
           <div className="stat-item">
             <span className="stat-value">100%</span>

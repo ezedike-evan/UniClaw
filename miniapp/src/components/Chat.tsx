@@ -108,14 +108,19 @@ function TypingIndicator(): JSX.Element {
 function Bubble({
   msg,
   onCopy,
+  onShare,
   copiedId,
+  sharedId,
 }: {
   msg: ChatMessage;
   onCopy: (id: string, text: string) => void;
+  onShare: (id: string, text: string) => void;
   copiedId: string | null;
+  sharedId: string | null;
 }): JSX.Element {
   const isUser = msg.role === "user";
   const isCopied = copiedId === msg.id;
+  const isShared = sharedId === msg.id;
 
   return (
     <div className={`bubble-row ${isUser ? "user" : "bot"}`}>
@@ -143,11 +148,11 @@ function Bubble({
           </button>
           <button
             type="button"
-            className="bubble-action-btn"
+            className={`bubble-action-btn ${isShared ? "copied" : ""}`}
             aria-label="Share"
-            onClick={() => onCopy(msg.id, msg.content)}
+            onClick={() => onShare(msg.id, msg.content)}
           >
-            <Icon name="share" size={14} />
+            <Icon name={isShared ? "check" : "share"} size={14} />
           </button>
         </div>
       )}
@@ -163,6 +168,7 @@ function Bubble({
 export function Chat({ chat }: Props): JSX.Element {
   const [input, setInput] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [sharedId, setSharedId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -183,6 +189,19 @@ export function Chat({ chat }: Props): JSX.Element {
       setCopiedId(id);
       setTimeout(() => setCopiedId(null), 1800);
     });
+  };
+
+  const handleShare = (id: string, text: string): void => {
+    if (navigator.share) {
+      void navigator.share({ text }).catch(() => {
+        /* cancelled or unsupported — fall back to copy */
+        handleCopy(id, text);
+      });
+    } else {
+      handleCopy(id, text);
+    }
+    setSharedId(id);
+    setTimeout(() => setSharedId(null), 1800);
   };
 
   /* Last completed bot message for follow-up chips */
@@ -257,7 +276,14 @@ export function Chat({ chat }: Props): JSX.Element {
             )}
 
             {chat.messages.map((m) => (
-              <Bubble key={m.id} msg={m} onCopy={handleCopy} copiedId={copiedId} />
+              <Bubble
+                key={m.id}
+                msg={m}
+                onCopy={handleCopy}
+                onShare={handleShare}
+                copiedId={copiedId}
+                sharedId={sharedId}
+              />
             ))}
 
             {/* Follow-up chips after last bot reply */}

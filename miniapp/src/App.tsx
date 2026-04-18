@@ -47,7 +47,7 @@ export default function App(): JSX.Element {
         retention.dismissNewContent();
       }
     },
-    [retention],
+    [retention.hasNewContent, retention.dismissNewContent],
   );
 
   useEffect(() => {

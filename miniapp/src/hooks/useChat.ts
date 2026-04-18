@@ -45,6 +45,8 @@ export function useChat(user: TelegramUser | null): UseChat {
   const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
+    /* Only persist when no message is pending — avoids a write per streamed token */
+    if (messages.some((m) => m.pending)) return;
     saveMessages(messages);
   }, [messages]);
 
